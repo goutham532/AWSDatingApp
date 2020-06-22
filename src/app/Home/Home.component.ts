@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,9 +11,12 @@ import { HttpClient } from '@angular/common/http';
 export class HomeComponent implements OnInit {
   registerMode=false;
   values:any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authservice: AuthService, private router: Router) { }
 
   ngOnInit() {
+    if(this.loggedin){
+      this.router.navigate(['members']);
+    }
   }
 
   registerToggle(){
@@ -20,6 +25,9 @@ export class HomeComponent implements OnInit {
 
   registerToggleFalse(){
     this.registerMode=false;
+  }
+  loggedin(){
+    return this.authservice.loggedin();
   }
 
   
